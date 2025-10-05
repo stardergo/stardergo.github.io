@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>欢迎来到我的博客</title>
+
+    <!-- 原样式全部内嵌，无需外部文件 -->
     <style>
+        /* ====== 全局基础 ====== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif;
             line-height: 1.6;
@@ -19,7 +21,7 @@
             min-height: 100vh;
         }
 
-        /* 导航栏样式 - Glassmorphism */
+        /* ====== 导航栏 ====== */
         nav {
             background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(10px);
@@ -32,7 +34,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid rgba(94, 234, 212, 0.1);
         }
-
         nav .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -41,20 +42,17 @@
             justify-content: space-between;
             align-items: center;
         }
-
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
             color: #5eead4;
             letter-spacing: 1px;
         }
-
         nav ul {
             list-style: none;
             display: flex;
             gap: 2rem;
         }
-
         nav a {
             color: #cbd5e1;
             text-decoration: none;
@@ -63,11 +61,9 @@
             position: relative;
             padding: 0.5rem 0;
         }
-
         nav a:hover {
             color: #5eead4;
         }
-
         nav a::after {
             content: '';
             position: absolute;
@@ -78,17 +74,16 @@
             background: #5eead4;
             transition: width 0.3s ease;
         }
-
         nav a:hover::after {
             width: 100%;
         }
 
-        /* 主要内容区域 */
+        /* ====== 主内容区 ====== */
         main {
             margin-top: 80px;
         }
 
-        /* 英雄区域 - Tech Gradient */
+        /* ====== Hero 区域 ====== */
         .hero {
             background: linear-gradient(135deg, #0c4a6e 0%, #0e7490 100%);
             color: white;
@@ -97,7 +92,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .hero::before {
             content: '';
             position: absolute;
@@ -107,7 +101,6 @@
             height: 100%;
             background: radial-gradient(circle at top right, rgba(94, 234, 212, 0.15) 0%, transparent 40%);
         }
-
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
@@ -120,7 +113,6 @@
             margin-right: auto;
             line-height: 1.2;
         }
-
         .hero p {
             font-size: 1.3rem;
             margin-bottom: 2.5rem;
@@ -132,7 +124,6 @@
             color: #e0f2fe;
             font-weight: 300;
         }
-
         .cta-button {
             display: inline-block;
             padding: 14px 36px;
@@ -150,7 +141,6 @@
             overflow: hidden;
             z-index: 1;
         }
-
         .cta-button::before {
             content: '';
             position: absolute;
@@ -163,28 +153,24 @@
             transition: opacity 0.3s ease;
             z-index: -1;
         }
-
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
         }
-
         .cta-button:hover::before {
             opacity: 1;
         }
 
-        /* 特性部分 - Glass Cards */
+        /* ====== 特性卡片 ====== */
         .features {
             padding: 6rem 0;
             background: transparent;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
         .features h2 {
             text-align: center;
             font-size: 2.8rem;
@@ -193,7 +179,6 @@
             position: relative;
             font-weight: 700;
         }
-
         .features h2::after {
             content: '';
             display: block;
@@ -203,13 +188,15 @@
             margin: 1.5rem auto 0;
             border-radius: 2px;
         }
-
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
         }
-
+        .feature-link {
+            text-decoration: none;
+            color: inherit;
+        }
         .feature-card {
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(10px);
@@ -221,39 +208,34 @@
             border: 1px solid rgba(94, 234, 212, 0.1);
             box-shadow: 0 8px 32px rgba(2, 8, 20, 0.4);
         }
-
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 12px 40px rgba(14, 165, 233, 0.25);
             border: 1px solid rgba(94, 234, 212, 0.3);
             background: rgba(15, 23, 42, 0.8);
         }
-
         .feature-icon {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
             color: #5eead4;
             transition: transform 0.3s ease;
         }
-
         .feature-card:hover .feature-icon {
             transform: scale(1.1);
         }
-
         .feature-card h3 {
             font-size: 1.6rem;
             margin-bottom: 1.2rem;
             color: #f0f9ff;
             font-weight: 600;
         }
-
         .feature-card p {
             color: #cbd5e1;
             line-height: 1.7;
             font-weight: 300;
         }
 
-        /* 页脚 - Dark Tech */
+        /* ====== 页脚 ====== */
         footer {
             background: linear-gradient(135deg, #0c4a6e 0%, #0e7490 100%);
             color: white;
@@ -261,7 +243,6 @@
             padding: 3rem 0;
             position: relative;
         }
-
         footer::before {
             content: '';
             position: absolute;
@@ -271,14 +252,13 @@
             height: 100%;
             background: radial-gradient(circle at bottom left, rgba(94, 234, 212, 0.15) 0%, transparent 40%);
         }
-
         footer p {
             position: relative;
             font-size: 1.1rem;
             opacity: 0.9;
         }
 
-        /* 动画 */
+        /* ====== 动画 ====== */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -290,36 +270,32 @@
             }
         }
 
-        /* 响应式设计 */
+        /* ====== 响应式 ====== */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
             }
-            
             .hero p {
                 font-size: 1.1rem;
             }
-            
             nav ul {
                 gap: 1.2rem;
             }
-            
             .features h2 {
                 font-size: 2.3rem;
             }
-            
             .feature-grid {
                 gap: 1.8rem;
             }
-            
             .feature-card {
                 padding: 2rem 1.5rem;
             }
         }
     </style>
 </head>
+
 <body>
-    <!-- 导航栏 -->
+    <!-- 导航 -->
     <nav>
         <div class="container">
             <div class="logo">stardergo的blog</div>
@@ -334,7 +310,7 @@
 
     <!-- 主要内容 -->
     <main>
-        <!-- 英雄区域 -->
+        <!-- Hero -->
         <section class="hero" id="home">
             <div class="container">
                 <h1>欢迎来到我的博客</h1>
@@ -343,26 +319,32 @@
             </div>
         </section>
 
-        <!-- 特性展示 -->
+        <!-- 特性卡片 -->
         <section class="features" id="services">
             <div class="container">
                 <h2>我的内容</h2>
                 <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🖊</div>
-                        <h3>笔记</h3>
-                        <p>一些知识和懒得写想直接复制黏贴的代码</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">💡</div>
-                        <h3>感悟</h3>
-                        <p>一些平时的心得体会和想法</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🛡️</div>
-                        <h3>杂物</h3>
-                        <p>一些没分到前面两类的东西</p>
-                    </div>
+                    <a href="notes.html" class="feature-link">
+                        <div class="feature-card">
+                            <div class="feature-icon">🖊</div>
+                            <h3>笔记</h3>
+                            <p>一些知识和懒得写想直接复制黏贴的代码</p>
+                        </div>
+                    </a>
+                    <a href="thoughts.html" class="feature-link">
+                        <div class="feature-card">
+                            <div class="feature-icon">💡</div>
+                            <h3>感悟</h3>
+                            <p>一些平时的心得体会和想法</p>
+                        </div>
+                    </a>
+                    <a href="misc.html" class="feature-link">
+                        <div class="feature-card">
+                            <div class="feature-icon">🛡️</div>
+                            <h3>杂物</h3>
+                            <p>一些没分到前面两类的东西</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -375,8 +357,4 @@
         </div>
     </footer>
 </body>
-
 </html>
-
-
-
