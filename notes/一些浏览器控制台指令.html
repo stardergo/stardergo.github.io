@@ -12,8 +12,15 @@
 <body>
   <h1>一些浏览器控制台指令</h1>
   <time>2025</time>
-  <p>正文开始……</p>
-  <p>第二段……</p>
+  <p>去除黏贴限制
+const ta = document.getElementById('passwordInput');
+ta.onpaste  = null;
+ta.oncontextmenu = null;
+ta.addEventListener('paste',  e => e.stopImmediatePropagation(), true);
+ta.addEventListener('contextmenu', e => e.stopImmediatePropagation(), true);
+  </p>
+  <p></p>
 </body>
 
 </html>
+
