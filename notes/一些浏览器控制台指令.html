@@ -12,15 +12,16 @@
 <body>
   <h1>一些浏览器控制台指令</h1>
   <time>2025</time>
-  <p>去除黏贴限制
-const ta = document.getElementById('passwordInput');
-ta.onpaste  = null;
-ta.oncontextmenu = null;
-ta.addEventListener('paste',  e => e.stopImmediatePropagation(), true);
+  <p>去除黏贴限制<br>
+const ta = document.getElementById('passwordInput');<br>
+ta.onpaste  = null;<br>
+ta.oncontextmenu = null;<br>
+ta.addEventListener('paste',  e => e.stopImmediatePropagation(), true);<br>
 ta.addEventListener('contextmenu', e => e.stopImmediatePropagation(), true);
   </p>
   <p></p>
 </body>
 
 </html>
+
 
