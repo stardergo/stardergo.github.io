@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <title>我的文章标题</title>
+  <title>HTTP基础知识</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body { max-width: 680px; margin: 40px auto; font: 18px/1.6 -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -10,13 +10,13 @@
   </style>
 </head>
 <body>
-  <h1>我的文章标题</h1>
+  <h1>HTTP基础知识</h1>
   <time>2025</time>
   <p>简介：超文本传输协议（Hypertext Transfer Protocol，HTTP）是一个简单的请求-响应协议，它通常运行在TCP之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。
     请求和响应消息的头以ASCII形式给出；而消息内容则具有一个类似MIME的格式。
     超文本传输协议是一种用于分布式、协作式和超媒体信息系统的应用层协议，是万维网WWW（World Wide Web）的数据通信的基础。</p>
   <p> 
-  在计算机网络中，HTTP（HyperText Transfer Protocol）请求数据包是用来在客户端和服务器之间传输数据的一种格式。这些数据包遵循一定的结构，包括请求行、请求头和可选的请求体。
+  在计算机网络中，HTTP（HyperText Transfer Protocol）请求数据包是用来在客户端和服务器之间传输数据的一种格式。这些数据包遵循一定的结构，包括请求行、请求头和可选的请求体。<br>
 HTTP请求数据包的基本结构</p>
 <p>HTTP请求包格式：<br>
   1. 请求行（Request Line）<br>
@@ -46,12 +46,35 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0
 Content-Type: application/x-www-form-urlencoded<br>
 Content-Length: 27
   </p> 
-  <p></p> 
-  <p></p> 
-  <p></p>
-  <p></p> 
+  <p> 3. 请求体（Body，可选）（注意：在编辑请求包时body部分要与前面空一行）<br>
+请求体是可选的，它包含了要发送给服务器的数据。例如，在POST请求中，表单数据或JSON数据会被包含在请求体中。<br>
+例如，一个POST请求的请求体可能看起来像这样：<br>
+    name=John+Doe&age=25<br>
+或者，如果是JSON格式：<br>
+    {<br>
+  "name": "John Doe",<br>
+  "age": 25<br>
+}
+  </p> 
+  <p>完整的HTTP GET请求示例</p> 
+  <p>GET /index.html HTTP/1.1<br>
+Host: example.com<br>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3<br>
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+</p>
+  <p>完整的HTTP POST请求示例（包含请求体）<br>
+  POST /submit HTTP/1.1<br>
+Host: example.com<br>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3<br>
+Accept: */*<br>
+Content-Type: application/x-www-form-urlencoded<br>
+Content-Length: 27<br>
+<br>
+name=John+Doe&age=25
+</p> 
   
   
 </body>
 
 </html>
+
