@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>一些CSS内联样式和内联样式表</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { max-width: 680px; margin: 40px auto; font: 18px/1.6 -apple-system, BlinkMacSystemFont, sans-serif; }
+    h1   { font-size: 2em; }
+  </style>
+</head>
+<body>
+  <h1>一些CSS内联样式和内联样式表</h1>
+  <time>2025</time>
+<h3>文字内容样式</h3>
+<!-- 背景像一块磨砂玻璃，透过它能看到下方模糊的背景图或渐变色；段落边缘柔和，整体浮在页面上，现代、轻盈。 -->
+    <p style="
+  max-width:600px;
+  margin:0 auto 2em;
+  padding:2em;
+  background:rgba(255,255,255,0.72);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  color:#222;
+  font:500 17px/1.8 -apple-system,BlinkMacSystemFont,sans-serif;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.4);
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+  text-align:justify;
+">
+内联样式<br>
+&ltp style="<br>
+  max-width:600px;<br>
+  margin:0 auto 2em;<br>
+  padding:2em;<br>
+  background:rgba(255,255,255,0.72);<br>
+  backdrop-filter:blur(10px);<br>
+  -webkit-backdrop-filter:blur(10px);<br>
+  color:#222;<br>
+  font:500 17px/1.8 -apple-system,BlinkMacSystemFont,sans-serif;<br>
+  border-radius:12px;<br>
+  border:1px solid rgba(255,255,255,0.4);<br>
+  box-shadow:0 8px 24px rgba(0,0,0,.08);<br>
+  text-align:justify;<br>
+"><br>
+  文字段落内容……<br>
+内联样式表<br>
+.glass-p{<br>
+  max-width:600px;<br>
+  margin:0 auto 2em;<br>
+  padding:2em;<br>
+  background:rgba(255,255,255,0.72);<br>
+  backdrop-filter:blur(10px);<br>
+  -webkit-backdrop-filter:blur(10px);<br>
+  color:#222;<br>
+  font:500 17px/1.8 -apple-system,BlinkMacSystemFont,sans-serif;<br>
+  border-radius:12px;<br>
+  border:1px solid rgba(255,255,255,0.4);<br>
+  box-shadow:0 8px 24px rgba(0,0,0,.08);<br>
+  text-align:justify;<br>
+}</p><br>
+<!-- 像一张微微泛黄的宣纸，左侧一条暖咖色“装订线”，行距宽松、字间距略大，中文衬线字形自带书卷气，适合长文阅读。 -->
+    <p style="
+  max-width:640px;
+  margin:0 auto 2em;
+  padding:2.2em 3em;
+  background:#fdfaf3;
+  color:#4a3c30;
+  font:400 18px/1.9 'Noto Serif SC',serif;
+  letter-spacing:0.05em;
+  border-left:4px solid #d9b38c;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+  text-align:justify;
+">
+内联样式<br>
+&ltp style="<br>
+   max-width:640px;<br>
+  margin:0 auto 2em;<br>
+  padding:2.2em 3em;<br>
+  background:#fdfaf3;<br>
+  color:#4a3c30;<br>
+  font:400 18px/1.9 'Noto Serif SC',serif;<br>
+  letter-spacing:0.05em;<br>
+  border-left:4px solid #d9b38c;<br>
+  box-shadow:0 2px 6px rgba(0,0,0,.05);<br>
+  text-align:justify;<br>
+"><br>
+  文字段落内容……<br>
+内联样式表<br>
+ max-width:640px;<br>
+  margin:0 auto 2em;<br>
+  padding:2.2em 3em;<br>
+  background:#fdfaf3;<br>
+  color:#4a3c30;<br>
+  font:400 18px/1.9 'Noto Serif SC',serif;<br>
+  letter-spacing:0.05em;<br>
+  border-left:4px solid #d9b38c;<br>
+  box-shadow:0 2px 6px rgba(0,0,0,.05);<br>
+  text-align:justify;<br>
+">}</p>
+</body>
+</html>
