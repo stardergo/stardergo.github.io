@@ -13,8 +13,20 @@
   <h1>一些CSS内联样式</h1>
   <time>2025</time>
 <h3>文字内容样式</h3>
-<!-- 背景像一块磨砂玻璃，透过它能看到下方模糊的背景图或渐变色；段落边缘柔和，整体浮在页面上，现代、轻盈。 -->
-    <p style="
+   <!-- 背景像一块磨砂玻璃，透过它能看到下方模糊的背景图或渐变色；段落边缘柔和，整体浮在页面上，现代、轻盈。 -->
+  <pre style="max-width:600px;
+  margin:0 auto 2em;
+  padding:2em;
+  background:rgba(255,255,255,0.72);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  color:#222;
+  font:500 17px/1.8 -apple-system,BlinkMacSystemFont,sans-serif;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.4);
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+  text-align:justify;">
+&lt;p style="
   max-width:600px;
   margin:0 auto 2em;
   padding:2em;
@@ -27,26 +39,23 @@
   border:1px solid rgba(255,255,255,0.4);
   box-shadow:0 8px 24px rgba(0,0,0,.08);
   text-align:justify;
-">
-&ltp style="<br>
-  max-width:600px;<br>
-  margin:0 auto 2em;<br>
-  padding:2em;<br>
-  background:rgba(255,255,255,0.72);<br>
-  backdrop-filter:blur(10px);<br>
-  -webkit-backdrop-filter:blur(10px);<br>
-  color:#222;<br>
-  font:500 17px/1.8 -apple-system,BlinkMacSystemFont,sans-serif;<br>
-  border-radius:12px;<br>
-  border:1px solid rgba(255,255,255,0.4);<br>
-  box-shadow:0 8px 24px rgba(0,0,0,.08);<br>
-  text-align:justify;<br>
-"><br>
+"&gt;
   文字段落内容……
-</p>
-<!-- 像一张微微泛黄的宣纸，左侧一条暖咖色“装订线”，行距宽松、字间距略大，中文衬线字形自带书卷气，适合长文阅读。 -->
-    <p style="
-  max-width:640px;
+&lt;/p&gt;
+</pre>
+ <!-- 像一张微微泛黄的宣纸，左侧一条暖咖色“装订线”，行距宽松、字间距略大，中文衬线字形自带书卷气，适合长文阅读。 -->
+  <pre style="max-width:640px;
+  margin:0 auto 2em;
+  padding:2.2em 3em;
+  background:#fdfaf3;
+  color:#4a3c30;
+  font:400 18px/1.9 'Noto Serif SC',serif;
+  letter-spacing:0.05em;
+  border-left:4px solid #d9b38c;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+  text-align:justify;">
+&lt;p style="
+ max-width:640px;
   margin:0 auto 2em;
   padding:2.2em 3em;
   background:#fdfaf3;
@@ -56,25 +65,25 @@
   border-left:4px solid #d9b38c;
   box-shadow:0 2px 6px rgba(0,0,0,.05);
   text-align:justify;
-">
-&ltp style="<br>
-   max-width:640px;<br>
-  margin:0 auto 2em;<br>
-  padding:2.2em 3em;<br>
-  background:#fdfaf3;<br>
-  color:#4a3c30;<br>
-  font:400 18px/1.9 'Noto Serif SC',serif;<br>
-  letter-spacing:0.05em;<br>
-  border-left:4px solid #d9b38c;<br>
-  box-shadow:0 2px 6px rgba(0,0,0,.05);<br>
-  text-align:justify;<br>
-"><br>
+"&gt;
   文字段落内容……
-    </p>
-  <!-- 深黑背景搭配等宽字体，左侧荧光绿指示条像终端里的光标；行高宽松，长链接或代码不会撑破容器，适合贴日志或代码片段。
+&lt;/p&gt;
+</pre>
+<!-- 深黑背景搭配等宽字体，左侧荧光绿指示条像终端里的光标；行高宽松，长链接或代码不会撑破容器，适合贴日志或代码片段。
  -->
-    <p style="
-  max-width:680px;
+  <pre style="max-width:680px;
+  margin:0 auto 2em;
+  padding:1.6em 2em;
+  background:#1e1e1e;
+  color:#f8f8f2;
+  font:400 16px/1.7 'Fira Code',monospace;
+  border-left:4px solid #50fa7b;
+  border-radius:4px;
+  box-shadow:0 4px 18px rgba(0,0,0,.35);
+  white-space:pre-wrap;
+  word-break:break-all;">
+&lt;p style="
+max-width:680px;
   margin:0 auto 2em;
   padding:1.6em 2em;
   background:#1e1e1e;
@@ -85,45 +94,6 @@
   box-shadow:0 4px 18px rgba(0,0,0,.35);
   white-space:pre-wrap;
   word-break:break-all;
-">
-&ltp style="<br>
- max-width:680px;<br>
-  margin:0 auto 2em;<br>
-  padding:1.6em 2em;<br>
-  background:#1e1e1e;<br>
-  color:#f8f8f2;<br>
-  font:400 16px/1.7 'Fira Code',monospace;<br>
-  border-left:4px solid #50fa7b;<br>
-  border-radius:4px;<br>
-  box-shadow:0 4px 18px rgba(0,0,0,.35);<br>
-  white-space:pre-wrap;<br>
-  word-break:break-all;<br>
-"><br>
-  文字段落内容……
-    </p>
-  <!-- 燕麦米白：柔和纸质，适合长文阅读 -->
-  <pre style="max-width:640px;
-  margin:0 auto 2em;
-  padding:2.2em 3em;
-  background:#faf8f5;
-  color:#4a4a4a;
-  font:400 18px/1.85 'Lora',serif;
-  letter-spacing:.03em;
-  border-left:3px solid #d8c6a6;
-  border-radius:2px;
-  box-shadow:0 2px 8px rgba(0,0,0,.04);">
-&lt;p style="
-  max-width:640px;
-  margin:0 auto 2em;
-  padding:2.2em 3em;
-  background:#faf8f5;
-  color:#4a4a4a;
-  font:400 18px/1.85 'Lora',serif;
-  letter-spacing:.03em;
-  border-left:3px solid #d8c6a6;
-  border-radius:2px;
-  box-shadow:0 2px 8px rgba(0,0,0,.04);
-  text-align:justify;
 "&gt;
   文字段落内容……
 &lt;/p&gt;
@@ -131,6 +101,7 @@
 </body>
 
 </html>
+
 
 
 
