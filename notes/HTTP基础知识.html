@@ -50,6 +50,11 @@ GET /index.html HTTP/1.1<br>
     ‌Accept‌：客户端可接受的内容类型。<br>
     ‌Content-Type‌：请求体的媒体类型，例如application/x-www-form-urlencoded或application/json。<br>
     ‌Content-Length‌：请求体的长度（如果存在）。<br>
+    Cookie:服务器发送到用户浏览器并保存在本地的一小块数据。浏览器会存储Cookie，并在下次向同一服务器发起请求时携带并发送到服务器上。Cookie主要用于以下三个方面：
+保持用户登录状态：Cookie可以存储用户的登录信息，以便在后续请求中保持用户身份。
+个性化用户体验：Cookie可以帮助网站了解用户的行为和偏好，从而提供个性化的服务。
+跟踪用户行为：Cookie可以记录用户的访问历史和互动，帮助网站分析用户行为。
+Cookie的使用使得基于无状态的HTTP协议能够记录稳定的状态信息，但也有隐私和安全方面的考虑
 例如：<br>
     Host: example.com<br>
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3<br>
@@ -88,5 +93,6 @@ name=John+Doe&age=25
 </body>
 
 </html>
+
 
 
