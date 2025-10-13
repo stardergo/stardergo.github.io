@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>工具功能说明</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { max-width:600px;
+margin:0 auto 2em;
+padding:2em;
+background:rgba(255,255,255,0.72);
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+color:#222;
+font:500 17px/1.8 -apple-system,BlinkMacSystemFont,sans-serif;
+border-radius:12px;
+border:1px solid rgba(255,255,255,0.4);
+box-shadow:0 8px 24px rgba(0,0,0,.08);
+text-align:justify;}
+    h1   { font-size: 2em; }
+  </style>
+</head>
+<body>
+  <h1>工具功能说明</h1>
+  <time>2025</time>
+    <p></p>
+</body>
+
+</html>
