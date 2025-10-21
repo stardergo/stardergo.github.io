@@ -64,13 +64,34 @@ text-align:justify;}
   <h3 style="color:red">
     现在我们已经知道了SQL和SQL注入的基础概念，接下来我们对其进行更深入的了解。
   </h3>
-  <p>
+  <a href="https://www.w3ccoo.com/sql/sql_syntax.html">
+    这是一个网站链接，如果你后续想更深入更系统地学习SQL可以点击这里。
+  </a>
+  <p>而现在，你可以先继续往下看：
   </p>
-  
+  <p>首先请记住，SQL对与大小写是不敏感的，在SQL语句中select与SELECT甚至SelecT是相同的(SQL 关键字大小写不敏感，但表名、列名、数据库名是否大小写敏感，取决于数据库类型和配置。)，
+    这在过去也对对抗关键词滤过有过一定意义(但在很早以前“大小写混写”这种绕过方法已经被淘汰了，现在只能作为历史知识或CTF“签到题”存在)，分号用来分隔 SQL 语句，这是基础的SQL语法。
+  </p>
+  <p>下面介绍一些重要的 SQL 命令
+  </p>
+  <pre>
+SELECT - 从数据库中提取数据
+UPDATE - 更新数据库中的数据
+DELETE - 从数据库中删除数据
+INSERT INTO - 向数据库中插入新数据
+CREATE DATABASE - 创建新数据库
+ALTER DATABASE - 修改数据库
+CREATE TABLE - 创建新表
+ALTER TABLE - 变更（改变）数据库表
+DROP TABLE - 删除表
+CREATE INDEX - 创建索引（搜索键）
+DROP INDEX - 删除索引
+  </pre>
 </body>
 
 
 </html>
+
 
 
 
