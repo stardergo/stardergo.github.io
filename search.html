@@ -1,125 +1,264 @@
-let posts = [];
-let timer;
-const input = document.getElementById('searchInput');
-const results = document.getElementById('results');
-const count = document.getElementById('resultCount');
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索文章</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 50px 40px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+        .back-link {
+            display: inline-block;
+            color: #6c7a8d;
+            text-decoration: none;
+            margin-bottom: 24px;
+        }
+        .back-link:hover { color: #2c3e50; }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle { color: #7f8c8d; font-size: 14px; margin-bottom: 28px; }
+        #searchInput {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 18px;
+            border: 2px solid rgba(255,255,255,0.8);
+            border-radius: 60px;
+            outline: none;
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            transition: all 0.3s;
+        }
+        #searchInput:focus {
+            border-color: #3498db;
+            box-shadow: 0 8px 30px rgba(52,152,219,0.15);
+        }
+        #resultCount { font-size: 14px; color: #7f8c8d; margin: 16px 0 12px; min-height: 22px; }
+        #results { list-style: none; max-height: 420px; overflow-y: auto; }
+        #results::-webkit-scrollbar { width: 4px; }
+        #results::-webkit-scrollbar-thumb { background: #d0d7de; border-radius: 10px; }
+        .result-item {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: all 0.25s;
+            animation: slideUp 0.3s ease forwards;
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        .result-item:nth-child(1) { animation-delay: 0.02s; }
+        .result-item:nth-child(2) { animation-delay: 0.04s; }
+        .result-item:nth-child(3) { animation-delay: 0.06s; }
+        .result-item:nth-child(4) { animation-delay: 0.08s; }
+        .result-item:nth-child(5) { animation-delay: 0.10s; }
+        .result-item a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-size: 16px;
+            font-weight: 500;
+            display: block;
+        }
+        .result-item a:hover { color: #3498db; }
+        .result-item strong { color: #3498db; }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+        .empty-state { text-align: center; padding: 40px 20px; color: #95a5a6; }
+        .empty-state .emoji { font-size: 48px; display: block; margin-bottom: 12px; }
+        .loading-state { text-align: center; padding: 30px 20px; color: #95a5a6; }
+        .spinner {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border: 3px solid #ecf0f1;
+            border-top-color: #3498db;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .result-item .summary {
+            font-size: 13px;
+            color: #95a5a6;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+        .result-item .url {
+            font-size: 12px;
+            color: #b0bec5;
+            margin-top: 4px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 返回首页</a>
+        <h1>🔍 搜索文章</h1>
+        <p class="subtitle">输入标题关键词，快速找到你想看的文章</p>
 
-// --- 1. 加载 search.json ---
-async function loadData() {
-    try {
-        const resp = await fetch('/search.json?t=' + Date.now());
-        if (!resp.ok) throw new Error('文件不存在');
-        posts = await resp.json();
-        console.log('✅ 已加载 ' + posts.length + ' 篇文章');
-    } catch (e) {
-        results.innerHTML = `
-            <li class="empty-state">
-                <span class="emoji">📂</span>
-                <p>搜索数据加载失败</p>
-                <p style="font-size:13px;margin-top:8px;color:#b0bec5;">
-                    请确认 search.json 文件存在
-                </p>
-            </li>
-        `;
-        console.error('加载 search.json 失败:', e);
-    }
-}
+        <input type="text" id="searchInput" placeholder="输入文章标题..." autofocus>
+        <div id="resultCount"></div>
+        <ul id="results"></ul>
+    </div>
 
-// --- 2. 执行搜索（使用已加载的 posts 数据）---
-function performSearch(keyword) {
-    const q = keyword.trim().toLowerCase();
+    <script>
+        // ============================================================
+        //  纯前端搜索：加载 search.json，在浏览器中完成搜索
+        //  无需后端服务器，无任何第三方依赖
+        // ============================================================
 
-    if (q.length < 1) {
-        results.innerHTML = '';
-        count.textContent = '';
-        return;
-    }
+        let posts = [];
+        let timer;
+        const input = document.getElementById('searchInput');
+        const results = document.getElementById('results');
+        const count = document.getElementById('resultCount');
 
-    const matched = posts.filter(post => {
-        const titleLower = post.title.toLowerCase();
-        const summaryLower = (post.summary || '').toLowerCase();
-        return titleLower.includes(q) || summaryLower.includes(q);
-    });
+        // --- 1. 加载 search.json ---
+        async function loadData() {
+            try {
+                const resp = await fetch('/search.json?t=' + Date.now());
+                if (!resp.ok) throw new Error('文件不存在');
+                posts = await resp.json();
+                console.log('✅ 已加载 ' + posts.length + ' 篇文章');
+            } catch (e) {
+                results.innerHTML = `
+                    <li class="empty-state">
+                        <span class="emoji">📂</span>
+                        <p>搜索数据加载失败</p>
+                        <p style="font-size:13px;margin-top:8px;color:#b0bec5;">
+                            请确认 search.json 文件存在
+                        </p>
+                    </li>
+                `;
+                console.error('加载 search.json 失败:', e);
+            }
+        }
 
-    matched.sort((a, b) => {
-        const aTitle = a.title.toLowerCase().includes(q);
-        const bTitle = b.title.toLowerCase().includes(q);
-        if (aTitle && !bTitle) return -1;
-        if (!aTitle && bTitle) return 1;
-        return a.title.localeCompare(b.title);
-    });
+        // --- 2. 执行搜索 ---
+        function performSearch(keyword) {
+            const q = keyword.trim().toLowerCase();
 
-    displayResults(matched, q);
-}
+            if (q.length < 1) {
+                results.innerHTML = '';
+                count.textContent = '';
+                return;
+            }
 
-// --- 3. 显示结果 ---
-function displayResults(data, q) {
-    if (data.length === 0) {
-        results.innerHTML = `
-            <li class="empty-state">
-                <span class="emoji">😅</span>
-                <p>没找到包含 “${q}” 的文章</p>
-            </li>
-        `;
-        count.textContent = '';
-        return;
-    }
+            // 搜索标题 + 摘要
+            const matched = posts.filter(post => {
+                const titleLower = post.title.toLowerCase();
+                const summaryLower = (post.summary || '').toLowerCase();
+                return titleLower.includes(q) || summaryLower.includes(q);
+            });
 
-    count.textContent = `找到 ${data.length} 篇文章`;
+            // 按匹配度排序：标题匹配优先
+            matched.sort((a, b) => {
+                const aTitle = a.title.toLowerCase().includes(q);
+                const bTitle = b.title.toLowerCase().includes(q);
+                if (aTitle && !bTitle) return -1;
+                if (!aTitle && bTitle) return 1;
+                return a.title.localeCompare(b.title);
+            });
 
-    const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(escaped, 'gi');
+            displayResults(matched, q);
+        }
 
-    results.innerHTML = data.map(item => {
-        const highlightedTitle = item.title.replace(regex, match => `<strong>${match}</strong>`);
-        const highlightedSummary = (item.summary || '').replace(regex, match => `<strong>${match}</strong>`);
-        return `
-            <li class="result-item">
-                <a href="${item.url}">
-                    <div>${highlightedTitle}</div>
-                    ${item.summary ? `<div class="summary">${highlightedSummary}</div>` : ''}
-                    <div class="url">${item.url}</div>
-                </a>
-            </li>
-        `;
-    }).join('');
-}
+        // --- 3. 显示结果 ---
+        function displayResults(data, q) {
+            if (data.length === 0) {
+                results.innerHTML = `
+                    <li class="empty-state">
+                        <span class="emoji">😅</span>
+                        <p>没找到包含 “${q}” 的文章</p>
+                    </li>
+                `;
+                count.textContent = '';
+                return;
+            }
 
-// --- 4. 防抖监听 ---
-input.addEventListener('input', function() {
-    clearTimeout(timer);
-    const q = this.value.trim();
+            count.textContent = `找到 ${data.length} 篇文章`;
 
-    if (q.length < 1) {
-        results.innerHTML = '';
-        count.textContent = '';
-        return;
-    }
+            const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(escaped, 'gi');
 
-    results.innerHTML = `
-        <li class="loading-state">
-            <div class="spinner"></div>
-            <p>搜索中...</p>
-        </li>
-    `;
+            results.innerHTML = data.map(item => {
+                const highlightedTitle = item.title.replace(regex, match => `<strong>${match}</strong>`);
+                const highlightedSummary = (item.summary || '').replace(regex, match => `<strong>${match}</strong>`);
+                return `
+                    <li class="result-item">
+                        <a href="${item.url}">
+                            <div>${highlightedTitle}</div>
+                            ${item.summary ? `<div class="summary">${highlightedSummary}</div>` : ''}
+                            <div class="url">${item.url}</div>
+                        </a>
+                    </li>
+                `;
+            }).join('');
+        }
 
-    timer = setTimeout(() => performSearch(q), 250);
-});
+        // --- 4. 防抖监听 ---
+        input.addEventListener('input', function() {
+            clearTimeout(timer);
+            const q = this.value.trim();
 
-// --- 5. 快捷键 ---
-document.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        input.focus();
-    }
-    if (e.key === 'Escape' && document.activeElement === input) {
-        input.value = '';
-        results.innerHTML = '';
-        count.textContent = '';
-        input.blur();
-    }
-});
+            if (q.length < 1) {
+                results.innerHTML = '';
+                count.textContent = '';
+                return;
+            }
 
-// --- 6. 启动 ---
-loadData();
-window.addEventListener('load', () => setTimeout(() => input.focus(), 300));
+            results.innerHTML = `
+                <li class="loading-state">
+                    <div class="spinner"></div>
+                    <p>搜索中...</p>
+                </li>
+            `;
+
+            timer = setTimeout(() => performSearch(q), 250);
+        });
+
+        // --- 5. 快捷键 ---
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                input.focus();
+            }
+            if (e.key === 'Escape' && document.activeElement === input) {
+                input.value = '';
+                results.innerHTML = '';
+                count.textContent = '';
+                input.blur();
+            }
+        });
+
+        // --- 6. 启动 ---
+        loadData();
+        window.addEventListener('load', () => setTimeout(() => input.focus(), 300));
+    </script>
+</body>
+</html>
