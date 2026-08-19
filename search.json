@@ -1,0 +1,22 @@
+[
+  {
+    "title": "我的第一篇博客文章",
+    "url": "/post1.html",
+    "summary": "这是文章摘要，可以写前几十个字。"
+  },
+  {
+    "title": "Python 学习笔记",
+    "url": "/python-notes.html",
+    "summary": "记录学习 Python 过程中的关键知识点和踩坑经验。"
+  },
+  {
+    "title": "GitHub Pages 搭建博客",
+    "url": "/github-pages-blog.html",
+    "summary": "教你如何用 GitHub Pages 免费搭建个人博客。"
+  },
+  {
+    "title": "关于本站",
+    "url": "/about.html",
+    "summary": "这个博客主要记录技术学习和生活思考。"
+  }
+]
