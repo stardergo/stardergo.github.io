@@ -145,18 +145,7 @@
                 if (!resp.ok) throw new Error('文件不存在');
                 posts = await resp.json();
                 console.log('✅ 已加载 ' + posts.length + ' 篇文章');
-            } catch (e) {
-                results.innerHTML = `
-                    <li class="empty-state">
-                        <span class="emoji">📂</span>
-                        <p>搜索数据加载失败</p>
-                        <p style="font-size:13px;margin-top:8px;color:#b0bec5;">
-                            请确认 search.json 文件存在
-                        </p>
-                    </li>
-                `;
-                console.error('加载 search.json 失败:', e);
-            }
+            } 
         }
 
         // --- 2. 执行搜索 ---
