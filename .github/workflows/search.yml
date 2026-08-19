@@ -2,45 +2,62 @@ name: 自动更新搜索索引
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main, master ]
     paths:
       - '**.html'
+      - '**.md'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     permissions:
       contents: write
       pages: write
       id-token: write
-    
+
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
+
+      # 如果你的博客需要 Jekyll 构建（有 _config.yml），取消注释下面这行
+      # - name: 构建 Jekyll 站点
+      #   uses: actions/jekyll-build-pages@v1
+      #   with:
+      #     source: ./
+      #     destination: ./_site
+
+      # 如果不需要 Jekyll，直接用当前目录
       - name: 生成 Pagefind 索引
-        run: npx pagefind --source .
-      
+        run: |
+          # 如果用了 Jekyll，改为 npx pagefind --source _site
+          npx pagefind --source .
+
+      - name: 创建 .nojekyll 文件
+        run: touch .nojekyll
+
       - name: 提交索引到仓库
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add _pagefind/
+          git add _pagefind/ .nojekyll
           if git diff --staged --quiet; then
             echo "没有变化需要提交"
           else
             git commit -m "自动更新搜索索引 [skip ci]"
             git push
           fi
-      
+
+      - name: 上传 Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .  # 如果用 Jekyll，改为 ./_site
+
       - name: 部署到 GitHub Pages
         uses: actions/deploy-pages@v4
