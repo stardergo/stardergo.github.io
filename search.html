@@ -101,6 +101,18 @@
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .result-item .summary {
+            font-size: 13px;
+            color: #95a5a6;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+        .result-item .url {
+            font-size: 12px;
+            color: #b0bec5;
+            margin-top: 4px;
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
@@ -108,55 +120,145 @@
         <a href="/" class="back-link">← 返回首页</a>
         <h1>🔍 搜索文章</h1>
         <p class="subtitle">输入标题关键词，快速找到你想看的文章</p>
-        
+
         <input type="text" id="searchInput" placeholder="输入文章标题..." autofocus>
         <div id="resultCount"></div>
         <ul id="results"></ul>
     </div>
 
     <script>
+        // ============================================================
+        //  纯前端搜索：加载 search.json，在浏览器中完成搜索
+        //  无需后端服务器，完全在本地运行
+        // ============================================================
+
+        let posts = [];
         let timer;
         const input = document.getElementById('searchInput');
         const results = document.getElementById('results');
         const count = document.getElementById('resultCount');
 
-        input.addEventListener('input', function() {
-            clearTimeout(timer);
-            const q = this.value.trim();
-            if (q.length < 1) { results.innerHTML = ''; count.textContent = ''; return; }
-            results.innerHTML = `<li class="loading-state"><div class="spinner"></div><p>搜索中...</p></li>`;
-            timer = setTimeout(() => performSearch(q), 300);
-        });
-
-        async function performSearch(q) {
+        // --- 1. 加载 search.json ---
+        async function loadData() {
             try {
-                const resp = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
-                const data = await resp.json();
-                displayResults(data, q);
+                const resp = await fetch('/search.json?t=' + Date.now());
+                if (!resp.ok) throw new Error('文件不存在');
+                posts = await resp.json();
+                console.log('✅ 已加载 ' + posts.length + ' 篇文章');
             } catch (e) {
-                results.innerHTML = `<li class="empty-state"><span class="emoji">⚠️</span><p>搜索服务不可用</p></li>`;
+                results.innerHTML = `
+                    <li class="empty-state">
+                        <span class="emoji">📂</span>
+                        <p>搜索数据加载失败</p>
+                        <p style="font-size:13px;margin-top:8px;color:#b0bec5;">
+                            请确认 search.json 文件存在
+                        </p>
+                    </li>
+                `;
+                console.error('加载 search.json 失败:', e);
             }
         }
 
-        function displayResults(data, q) {
-            if (data.length === 0) {
-                results.innerHTML = `<li class="empty-state"><span class="emoji">😅</span><p>没找到包含 “${q}” 的文章</p></li>`;
+        // --- 2. 执行搜索 ---
+        function performSearch(keyword) {
+            const q = keyword.trim().toLowerCase();
+
+            if (q.length < 1) {
+                results.innerHTML = '';
                 count.textContent = '';
                 return;
             }
-            count.textContent = `找到 ${data.length} 篇文章`;
-            const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            results.innerHTML = data.map(item => ({
-                ...item,
-                title: item.title.replace(new RegExp(escaped, 'gi'), match => `<strong>${match}</strong>`)
-            })).map(item => 
-                `<li class="result-item"><a href="${item.url}">${item.title}</a></li>`
-            ).join('');
+
+            // 搜索标题 + 摘要
+            const matched = posts.filter(post => {
+                const titleLower = post.title.toLowerCase();
+                const summaryLower = (post.summary || '').toLowerCase();
+                return titleLower.includes(q) || summaryLower.includes(q);
+            });
+
+            // 按匹配度排序：标题匹配优先
+            matched.sort((a, b) => {
+                const aTitle = a.title.toLowerCase().includes(q);
+                const bTitle = b.title.toLowerCase().includes(q);
+                if (aTitle && !bTitle) return -1;
+                if (!aTitle && bTitle) return 1;
+                return a.title.localeCompare(b.title);
+            });
+
+            displayResults(matched, q);
         }
 
-        document.addEventListener('keydown', e => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); input.focus(); }
+        // --- 3. 显示结果 ---
+        function displayResults(data, q) {
+            if (data.length === 0) {
+                results.innerHTML = `
+                    <li class="empty-state">
+                        <span class="emoji">😅</span>
+                        <p>没找到包含 “${q}” 的文章</p>
+                    </li>
+                `;
+                count.textContent = '';
+                return;
+            }
+
+            count.textContent = `找到 ${data.length} 篇文章`;
+
+            const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(escaped, 'gi');
+
+            results.innerHTML = data.map(item => {
+                const highlightedTitle = item.title.replace(regex, match => `<strong>${match}</strong>`);
+                const highlightedSummary = (item.summary || '').replace(regex, match => `<strong>${match}</strong>`);
+                return `
+                    <li class="result-item">
+                        <a href="${item.url}">
+                            <div>${highlightedTitle}</div>
+                            ${item.summary ? `<div class="summary">${highlightedSummary}</div>` : ''}
+                            <div class="url">${item.url}</div>
+                        </a>
+                    </li>
+                `;
+            }).join('');
+        }
+
+        // --- 4. 防抖监听 ---
+        input.addEventListener('input', function() {
+            clearTimeout(timer);
+            const q = this.value.trim();
+
+            if (q.length < 1) {
+                results.innerHTML = '';
+                count.textContent = '';
+                return;
+            }
+
+            results.innerHTML = `
+                <li class="loading-state">
+                    <div class="spinner"></div>
+                    <p>搜索中...</p>
+                </li>
+            `;
+
+            timer = setTimeout(() => performSearch(q), 250);
         });
+
+        // --- 5. 快捷键 ---
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                input.focus();
+            }
+            if (e.key === 'Escape' && document.activeElement === input) {
+                input.value = '';
+                results.innerHTML = '';
+                count.textContent = '';
+                input.blur();
+            }
+        });
+
+        // --- 6. 启动 ---
+        loadData();
+        window.addEventListener('load', () => setTimeout(() => input.focus(), 300));
     </script>
 </body>
 </html>
